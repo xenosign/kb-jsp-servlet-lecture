@@ -12,8 +12,7 @@
 </head>
 <%@ include file="header.jsp" %>
 <body>
-    <h1>로그인 실패!</h1>
-    <h2>ID 또는 PW 가 틀립니다</h2>
+    <h1>로그인이 필요한 서비스 입니다</h1>
     <a href="login"><button type="button">로그인 페이지로</button></a>
 </body>
 </html>

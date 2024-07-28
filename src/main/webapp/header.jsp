@@ -5,7 +5,7 @@
   Time: 오후 7:40
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,8 +15,8 @@
 <body>
 <div id="header">
     <a href="/">Home</a>
-    <a href="/login.jsp">Login</a>
-    <a href="/board.jsp">Board</a>
+    <a href="login">Login</a>
+    <a href="post">Board</a>
 </div>
 </body>
 </html>

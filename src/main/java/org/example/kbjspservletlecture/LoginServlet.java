@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/login";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/board";
     private static final String JDBC_USER = "root";
     private static final String JDBC_PASSWORD = "1234";
 
@@ -28,6 +28,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        int userid = 0;
 
         boolean isLoginSuccess = false;
 
@@ -40,9 +41,11 @@ public class LoginServlet extends HttpServlet {
                 pstmt.setString(1, username);
                 pstmt.setString(2, password);
 
-                try (ResultSet resultSet = pstmt.executeQuery()) {
-                    if (resultSet.next()) {
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
                         isLoginSuccess = true;
+                        userid = rs.getInt("id");
+                        System.out.println(userid);
                     }
                 }
             }
@@ -53,7 +56,8 @@ public class LoginServlet extends HttpServlet {
         if (isLoginSuccess) {
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
-            response.sendRedirect("welcome.jsp");
+            session.setAttribute("userid", userid);
+            response.sendRedirect("/post");
         } else {
             response.sendRedirect("error.jsp");
         }
