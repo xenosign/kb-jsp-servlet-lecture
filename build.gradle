@@ -21,8 +21,13 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
+repositories {
+    mavenCentral() // Maven 중앙 저장소 추가
+}
+
 dependencies {
     compileOnly('javax.servlet:javax.servlet-api:4.0.1')
+    implementation 'mysql:mysql-connector-java:8.0.30'
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
