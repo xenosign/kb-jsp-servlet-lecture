@@ -59,7 +59,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("userid", userid);
             response.sendRedirect("/post");
         } else {
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("loginFailed.jsp");
         }
     }
 }
