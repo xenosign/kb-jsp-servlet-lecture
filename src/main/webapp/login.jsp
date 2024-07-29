@@ -4,8 +4,8 @@
 <head>
     <title>Login Page</title>
 </head>
-<%@ include file="header.jsp" %>
 <body>
+    <%@ include file="header.jsp" %>
     <h1>로그인</h1>
     <form method="post" action="login">
         <label for="username">아이디 :</label>
