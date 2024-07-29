@@ -16,17 +16,13 @@ public class LoginServlet extends HttpServlet {
     private static final String JDBC_USER = "root";
     private static final String JDBC_PASSWORD = "1234";
 
+    @Override
+    public void init() throws ServletException {
+        System.out.println("###### init() 메서드 호출, 서블릿 초기화! ######");
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        System.out.println("##### 로그인 요청!! #####");
-        System.out.println("username = " + username);
-        System.out.println("password = " + password);
-
-        // /login 주소로 요청이 오면 로그인 페이지 파일을 제공
         RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
         dispatcher.forward(request, response);
     }
@@ -65,6 +61,11 @@ public class LoginServlet extends HttpServlet {
         } else {
             response.sendRedirect("loginFailed.jsp");
         }
+    }
+
+    @Override
+    public void destroy() {
+        System.out.println("###### destroy() 메서드 호출, 서블릿 소멸! ######");
     }
 }
 
