@@ -5,14 +5,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
-@WebFilter("/post")
+@WebFilter("/board")
 public class LoginFilter implements Filter {
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        // 초기화 작업이 필요하면 여기에 추가
-    }
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
@@ -20,7 +14,7 @@ public class LoginFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
         HttpSession session = httpRequest.getSession(false);
-        boolean loggedIn = (session != null && session.getAttribute("userid") != null);
+        boolean loggedIn = (session != null && session.getAttribute("username") != null);
 
 
         if (loggedIn) {

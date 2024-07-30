@@ -15,10 +15,19 @@ public class LoginServlet extends HttpServlet {
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/board";
     private static final String JDBC_USER = "root";
     private static final String JDBC_PASSWORD = "1234";
+    private static Connection conn = null;
 
     @Override
     public void init() throws ServletException {
-        System.out.println("###### init() 메서드 호출, 서블릿 초기화! ######");
+        System.out.println("###### LoginServlet init() 메서드 호출, 서블릿 초기화 ######");
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+
+            System.out.println("###### MySQL 연결 성공 ######");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -35,12 +44,9 @@ public class LoginServlet extends HttpServlet {
         boolean isLoginSuccess = false;
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
             String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
 
-            try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
-                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, username);
                 pstmt.setString(2, password);
 
@@ -55,9 +61,10 @@ public class LoginServlet extends HttpServlet {
         }
 
         if (isLoginSuccess) {
-            request.setAttribute("username", username);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("welcome.jsp");
-            dispatcher.forward(request, response);
+            HttpSession session = request.getSession();
+            session.setAttribute("username", username);
+
+            response.sendRedirect("/board");
         } else {
             response.sendRedirect("loginFailed.jsp");
         }
@@ -65,7 +72,14 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     public void destroy() {
-        System.out.println("###### destroy() 메서드 호출, 서블릿 소멸! ######");
+        try {
+            conn.close();
+            System.out.println("###### MySQL 접속 종료 ######");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("###### LoginServlet destroy() 메서드 호출, 서블릿 소멸! ######");
     }
 }
 
