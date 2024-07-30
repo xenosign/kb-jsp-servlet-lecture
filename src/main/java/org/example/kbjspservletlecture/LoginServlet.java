@@ -16,6 +16,7 @@ public class LoginServlet extends HttpServlet {
     private static final String JDBC_USER = "root";
     private static final String JDBC_PASSWORD = "1234";
     private static Connection conn = null;
+    private int userid = 0;
 
     @Override
     public void init() throws ServletException {
@@ -52,6 +53,8 @@ public class LoginServlet extends HttpServlet {
 
                 try (ResultSet rs = pstmt.executeQuery()) {
                     if (rs.next()) {
+                        userid = rs.getInt("id");
+                        System.out.println(userid);
                         isLoginSuccess = true;
                     }
                 }
@@ -63,6 +66,7 @@ public class LoginServlet extends HttpServlet {
         if (isLoginSuccess) {
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
+            session.setAttribute("userid", userid);
 
             response.sendRedirect("/board");
         } else {

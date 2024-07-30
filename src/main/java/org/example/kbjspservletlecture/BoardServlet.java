@@ -48,18 +48,34 @@ public class BoardServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("board.jsp");
+        List<PostDto> posts = new ArrayList<>();
+
+        String sql = "SELECT p.post_id, p.title, p.content, p.created_at, u.username FROM posts p JOIN users u ON p.user_id = u.id";
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                int postId = rs.getInt("post_id");
+                String title = rs.getString("title");
+                String content = rs.getString("content");
+                Timestamp createdAt = rs.getTimestamp("created_at");
+                String username = rs.getString("username");
+
+                posts.add(new PostDto(postId, title, content, createdAt, username));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        request.setAttribute("posts", posts);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("postList.jsp");
         dispatcher.forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-
-        String post = request.getParameter("post");
-        request.setAttribute("post", post);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("boardDetail.jsp");
-        dispatcher.forward(request, response);
+        doGet(request, response);
     }
 
     @Override
