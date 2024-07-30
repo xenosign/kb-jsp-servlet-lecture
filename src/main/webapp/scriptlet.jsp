@@ -1,17 +1,39 @@
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>스크립틀렛</title>
 </head>
 <body>
+    <%@ include file="header.jsp" %>
+    <h1>순수 스크립틀렛으로 처리하는 페이지</h1>
+
+    <h2>조건 처리</h2>
     <%
-        int a = 1;
-        int b = 2;
-        int sum = a + b;
+        Boolean condition = (Boolean) request.getAttribute("condition");
+        if (condition != null && condition) {
+    %>
+        <p>전달 받은 조건은 TRUE!</p>
+    <%
+    } else {
+    %>
+        <p>전달 받은 조건은 FALSE</p>
+    <%
+        }
     %>
 
-    <h1>int a 에 저장 된 값은 <%= a %></h1>
-    <h1>int b 에 저장 된 값은 <%= int c = 4 %></h1>
-    <h1>둘의 합은 <%= sum %></h1>
+    <h2>리스트 컬렉션 출력하기</h2>
+    <ul>
+        <%
+            List<String> items = (List<String>) request.getAttribute("list");
+            if (items != null) {
+                for (String item : items) {
+        %>
+             <li><%= item %></li>
+        <%
+                }
+            }
+        %>
+    </ul>
 </body>
 </html>
