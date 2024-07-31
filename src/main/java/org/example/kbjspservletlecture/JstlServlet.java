@@ -24,9 +24,6 @@ public class JstlServlet extends HttpServlet {
 
         boolean isJSTL = "true".equals(request.getParameter("jstl")) ? true : false;
 
-        System.out.println(request.getParameter("jstl"));
-        System.out.println(isJSTL);
-
         if(isJSTL) {
             // jstl 사용
             request.getRequestDispatcher("jstl.jsp").forward(request, response);

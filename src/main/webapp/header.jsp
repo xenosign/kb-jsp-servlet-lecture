@@ -8,4 +8,5 @@
     <a href="scopeCheck.jsp">SCOPE-CHECK</a>
     <a href="jstl?jstl=false">SCRIPTLET</a>
     <a href="jstl?jstl=true">JSTL</a>
+    <a href="express">EX1</a>
 </header>
