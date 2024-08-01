@@ -72,7 +72,7 @@
 //    // 명령어를 실행하고, 결과에 따라 적절한 뷰를 포워드 또는 리다이렉트하는 메서드
 //    private void execute(Command command, HttpServletRequest request, HttpServletResponse response)
 //            throws IOException, ServletException {
-//        String viewName = command.execute(request, response);
+//        String viewName = A.execute(request, response);
 //        if (viewName.startsWith("redirect:")) {
 //            // 리다이렉트 처리
 //            response.sendRedirect(viewName.substring("redirect:".length()));
